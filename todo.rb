@@ -4,6 +4,8 @@ require "tilt/erubis"
 
 require_relative "database_persistence"
 
+# require 'pry'
+
 configure do
   enable :sessions
   set :session_secret, 'secret'
@@ -17,7 +19,8 @@ end
 
 helpers do
   def list_complete?(list)
-    todos_count(list) > 0 && todos_remaining_count(list) == 0
+    # todos_count(list) > 0 && todos_remaining_count(list) == 0
+    list[:todos_count] > 0 && list[:todos_remaining_count] == 0
   end
 
   def list_class(list)
@@ -86,6 +89,7 @@ end
 # View list of lists
 get "/lists" do
   @lists = @storage.all_lists
+  # binding.pry
   erb :lists, layout: :layout
 end
 
